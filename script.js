@@ -7,6 +7,7 @@ const toggle = player.querySelector('.toggle');
 const skipButtons = player.querySelectorAll('[data-skip]');
 const ranges = player.querySelectorAll('.player__slider');
 const speedValue = player.querySelector('.speed-value');
+const rewindButton = player.querySelector('.rewind'); // Add reference to rewind button
 
 /* Build functions */
 function togglePlay() {
@@ -24,6 +25,11 @@ function updateButton() {
 
 function skip() {
   video.currentTime += parseFloat(this.dataset.skip);
+}
+
+function rewind() {
+  // Rewind the video by 10 seconds
+  video.currentTime = Math.max(0, video.currentTime - 10);
 }
 
 function handleRangeUpdate() {
@@ -54,6 +60,11 @@ video.addEventListener('timeupdate', handleProgress);
 toggle.addEventListener('click', togglePlay);
 
 skipButtons.forEach(button => button.addEventListener('click', skip));
+
+// Add event listener for the rewind button
+if (rewindButton) {
+  rewindButton.addEventListener('click', rewind);
+}
 
 ranges.forEach(range => range.addEventListener('change', handleRangeUpdate));
 ranges.forEach(range => range.addEventListener('mousemove', handleRangeUpdate));
